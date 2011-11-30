@@ -1,0 +1,3 @@
+h1. CheerLights
+
+"CheerLights":http://www.cheerlights.com is an ioBridge Labs project that allows people's lights all across the world to synchronize, stay linked based on social networking trends. It's a way to connect physical things with social networking experiences and spread cheer at the same time. We are all connected. 
