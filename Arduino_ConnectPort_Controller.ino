@@ -70,7 +70,7 @@ void loop() {
     char charIn;
 
     do {
-        charIn = client.read(); // read a char from the buffer
+        charIn = Serial.read(); // read a char from the buffer
         response += charIn; // append that char to the string response
       } while (Serial.available() > 0); 
           
