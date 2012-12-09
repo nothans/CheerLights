@@ -121,7 +121,13 @@ void loop() {
         analogWrite( GREEN, 165 );
         analogWrite( BLUE, 0 );
     }
-    else if (String(stringIn) == "white" || String(stringIn) == "warmwhite")
+    else if (String(stringIn) == "warmwhite")
+    {
+        analogWrite( RED, 255 );
+        analogWrite( GREEN, 223 );
+        analogWrite( BLUE, 223 );
+    }
+    else if (String(stringIn) == "white")
     {  
         analogWrite( RED, 255 );
         analogWrite( GREEN, 255 );
