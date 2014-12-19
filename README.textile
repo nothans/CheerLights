@@ -1,6 +1,6 @@
 h1. CheerLights
 
-"CheerLights":http://www.cheerlights.com is a "Internet of Things" project created by "Hans Scharler":http://nothans.com that allows people's lights all across the world to synchronize to one color set by Twitter. This is a way to connect physical things with social networking experiences and spread cheer at the same time. We are all connected. 
+"CheerLights":http://www.cheerlights.com is an "Internet of Things" project created by "Hans Scharler":http://nothans.com that allows people's lights all across the world to synchronize to one color set by Twitter. This is a way to connect physical things with social networking experiences and spread cheer at the same time. We are all connected. 
 
 h2. Support
 
