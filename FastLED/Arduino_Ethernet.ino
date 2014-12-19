@@ -1,4 +1,5 @@
 /*
+
  CheerLights!
  
  CheerLights Channel --> Arduino Ethernet --> FastLED
@@ -12,8 +13,7 @@
  
  * Arduino Ethernet (or Arduino + Ethernet Shield)
  * Arduino 1.0+ IDE
- * FastLED Library
- https://github.com/FastLED/FastLED/releases
+ * FastLED Library - https://github.com/FastLED/FastLED/releases
  
  Network Requirements:
  * Ethernet port on Router
@@ -25,9 +25,12 @@
  Additional Credits:
  Example sketches from FastLED
  
+ ThingSpeak Tutorial:
+ http://community.thingspeak.com/tutorials/arduino/cheerlights-with-arduino-and-the-fastled-library/
+ 
  To join the CheerLights project, visit http://www.cheerlights.com
  
- */
+*/
 
 #include <SPI.h>
 #include <Ethernet.h>
@@ -46,17 +49,17 @@
 CRGB leds[NUM_LEDS];
 
 // Local Network Settings
-byte mac[] = { 
+byte mac[] = {
   0xD4, 0x28, 0xB2, 0xFF, 0xA0, 0xA1 }; // Must be unique on local network
 
 // ThingSpeak / CheerLights Settings
 char thingSpeakAddress[] = "api.thingspeak.com";
 String thingSpeakChannel = "1417";                // Channel number of the CheerLights Channel
-String thingSpeakField = "1";                     // Field number of the CheerLights Colors 
-const int thingSpeakInterval = 6 * 1000;         // Time interval in milliseconds to get data from ThingSpeak (number of seconds * 1000 = interval)
+String thingSpeakField = "1";                     // Field number of the CheerLights Colors
+const int thingSpeakInterval = 10 * 1000;         // Time interval in milliseconds to get data from ThingSpeak (number of seconds * 1000 = interval)
 
 // Variable Setup
-long lastConnectionTime = 0; 
+long lastConnectionTime = 0;
 String lastCommand = "";
 boolean lastConnected = false;
 int failedCounter = 0;
@@ -79,12 +82,12 @@ void setup() {
   FastLED.addLeds<NEOPIXEL,DATA_PIN>(leds, NUM_LEDS);
 }
 
-void loop() { 
+void loop() {
 
   // Process CheerLights Commands
   if(client.available() > 0)
   {  
-    delay(100); 
+    delay(100);
 
     String response;
     char charIn;
@@ -92,11 +95,11 @@ void loop() {
     do {
       charIn = client.read(); // read a char from the buffer
       response += charIn; // append that char to the string response
-    } 
-    while (client.available() > 0); 
-
-    // Send matching commands to the GE-35 Color Effect Lights
-    if (response.indexOf("white") > 0)
+    }
+    while (client.available() > 0);
+       
+    // Send matching commands to LEDs
+    if (response == "white")
     {
       lastCommand = "white";
 
@@ -106,9 +109,9 @@ void loop() {
         delay(30);
       }
     }
-    else if (response.indexOf("red") > 0)
-    {  
-      lastCommand = "red";   
+    else if (response == "red")
+    {
+      lastCommand = "red";
 
       for(int i = 0; i < NUM_LEDS; i++) {
         leds[i] = CRGB::Red;
@@ -116,7 +119,7 @@ void loop() {
         delay(30);
       }
     }
-    else if (response.indexOf("green") > 0)
+    else if (response == "green")
     {  
       lastCommand = "green";
 
@@ -126,7 +129,7 @@ void loop() {
         delay(30);
       }
     }
-    else if (response.indexOf("blue") > 0)
+    else if (response == "blue")
     {  
       lastCommand = "blue";  
 
@@ -136,7 +139,7 @@ void loop() {
         delay(30);
       }
     }
-    else if (response.indexOf("cyan") > 0)
+    else if (response == "cyan")
     {  
       lastCommand = "cyan";
 
@@ -146,7 +149,7 @@ void loop() {
         delay(30);
       }
     }
-    else if (response.indexOf("magenta") > 0)
+    else if (response == "magenta")
     {  
       lastCommand = "magenta";
 
@@ -156,7 +159,7 @@ void loop() {
         delay(30);
       }
     }
-    else if (response.indexOf("yellow") > 0)
+    else if (response == "yellow")
     {  
       lastCommand = "yellow";
 
@@ -166,7 +169,7 @@ void loop() {
         delay(30);
       }
     }
-    else if (response.indexOf("purple") > 0)
+    else if (response == "purple")
     {  
       lastCommand = "purple";
 
@@ -176,7 +179,7 @@ void loop() {
         delay(30);
       }
     }
-    else if (response.indexOf("orange") > 0)
+    else if (response == "orange")
     {  
       lastCommand = "orange";
 
@@ -186,7 +189,7 @@ void loop() {
         delay(30);
       }
     }
-    else if (response.indexOf("warmwhite") > 0)
+    else if (response == "warmwhite")
     {  
       lastCommand = "warmwhite";
 
@@ -196,7 +199,7 @@ void loop() {
         delay(30);
       }
     }
-    else if (response.indexOf("oldlace") > 0)
+    else if (response == "oldlace")
     {  
       lastCommand = "oldlace";
 
@@ -206,7 +209,7 @@ void loop() {
         delay(30);
       }
     }
-    else if (response.indexOf("pink") > 0)
+    else if (response == "pink")
     {  
       lastCommand = "pink";
 
@@ -225,7 +228,7 @@ void loop() {
     delay(200);
     Serial.println("CheerLight Command Received: "+lastCommand);
     Serial.println();
-    delay(200); 
+    delay(200);
   }
 
   // Disconnect from ThingSpeak
@@ -261,7 +264,7 @@ void subscribeToThingSpeak(String tsChannel, String tsField)
 
     failedCounter = 0;
 
-    client.println("GET /channels/"+tsChannel+"/field/"+tsField+"/last.txt HTTP/1.0");
+    client.println("GET /channels/"+tsChannel+"/field/"+tsField+"/last.txt");
     client.println();
 
     lastConnectionTime = millis();
@@ -270,10 +273,10 @@ void subscribeToThingSpeak(String tsChannel, String tsField)
   {
     failedCounter++;
 
-    Serial.println("Connection to ThingSpeak Failed ("+String(failedCounter, DEC)+")");   
+    Serial.println("Connection to ThingSpeak Failed ("+String(failedCounter, DEC)+")");
     Serial.println();
 
-    lastConnectionTime = millis(); 
+    lastConnectionTime = millis();
   }
 }
 
@@ -283,7 +286,7 @@ void startEthernet()
   client.stop();
 
   Serial.println("Connecting Arduino to network...");
-  Serial.println();  
+  Serial.println();
 
   delay(1000);
 
