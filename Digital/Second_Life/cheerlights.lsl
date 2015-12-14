@@ -25,8 +25,6 @@ default
         http_request_id = llHTTPRequest("http://api.thingspeak.com/channels/1417/field/1/last.txt", [], "");
     }
     
-  
- 
     http_response(key request_id, integer status, list metadata, string body)
     {
         if (request_id == http_request_id)
@@ -39,7 +37,7 @@ default
             else if (body == "white"){
                 llSetPrimitiveParams([PRIM_COLOR, ALL_SIDES, white, 1.0]);
             }
-             else if (body == "warmwhite"){
+             else if ((body == "warmwhite")||(body == "oldlace")){
                 llSetPrimitiveParams([PRIM_COLOR, ALL_SIDES, warmwhite, 1.0]);
             }
             else if (body == "red"){
