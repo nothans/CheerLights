@@ -1,3 +1,27 @@
+/*
+
+ CheerLights IR Controller
+ 
+ CheerLights API -> Particle Photon -> IR Transmitter
+ 
+ This sketch gets the latest CheerLights color from ThingSpeak and
+ transmits the color code over infrared to control IR lights.
+ 
+ Parts:
+   * SleepyLights Robot (http://amzn.to/2l8FCjM)
+   * Particle Photon (http://amzn.to/2lTvsRe)
+   * IR LED
+   * 330Ω resistor
+   * Breadboard
+    
+ Tutorial: http://nurseryhacks.com/nursery-robot-connected-cheerlights 
+ 
+ Created: Feb 28, 2017 by Hans Scharler - http://nothans.com
+ 
+ To join the CheerLights project, visit http://www.cheerlights.com
+
+*/
+
 // This #include statement was automatically added by the Particle IDE.
 #include <ThingSpeak.h>
 
